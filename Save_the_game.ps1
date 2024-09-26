@@ -10,9 +10,9 @@ function IsProcessRunning ($processName) {
 # realizar o commit
 function CommitChanges ($repoPath) {
     cd $repoPath
-	git remote add origin git@github.com:lucasrocha96/SaveTheGame.git
-	git branch -M main
-	git push -u origin main
+    git remote add origin git@github.com:lucasrocha96/SaveTheGame.git
+    git branch -M main
+    git push -u origin main
     git add .
     git commit -m "Commit automático após fechar SNES9X em $(Get-Date -Format s) - Jogo: Super Mario World" # Substitua por um nome de jogo dinâmico se necessário
 }
