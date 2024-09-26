@@ -1,14 +1,13 @@
-# Define os caminhos (certifique-se de ajustá-los)
 $diretorio = "C:\Users\Jorge L\Desktop\Saves\SNES"
 $repositorio = "C:\Users\Jorge L\Desktop\Git\Saves"
 $processo = "snes9x-x64"
 Start-Process "C:\Users\Jorge L\Emu\Snes\snes9x-x64" -ArgumentList "C:\Users\Jorge L\Emu\Snes\Roms"
-# Função para verificar se o processo está em execução
+# se o processo está em execução
 function IsProcessRunning ($processName) {
     Get-Process -Name $processName | Select-Object -First 1
 }
 
-# Função para realizar o commit
+# realizar o commit
 function CommitChanges ($repoPath) {
     cd $repoPath
 	git remote add origin git@github.com:lucasrocha96/SaveTheGame.git
@@ -18,14 +17,14 @@ function CommitChanges ($repoPath) {
     git commit -m "Commit automático após fechar SNES9X em $(Get-Date -Format s) - Jogo: Super Mario World" # Substitua por um nome de jogo dinâmico se necessário
 }
 
-# Loop infinito para monitorar o diretório e o processo
+# Loop infinito para monitorar diretório e processo
 while ($true) {
-    # Verifica se o processo SNES9X está em execução
+    # Verifica se está em execução
     if (!(IsProcessRunning $processo)) {
-        # Obtém as informações dos arquivos uma vez
+        # Obtém as informações dos arquivos 
         $arquivos = Get-ChildItem $diretorio -Recurse | Select-Object -LastWriteTime
 
-        # Verifica se houve alterações
+        # Verifica alterações
         if ($arquivos | Compare-Object -ReferenceObject $arquivos -Property LastWriteTime) {
             try {
                 CommitChanges $repositorio
